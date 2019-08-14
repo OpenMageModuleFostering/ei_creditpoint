@@ -58,7 +58,7 @@ class Ei_Creditpoint_Model_Sales_Quote_Address_Total_Creditpoint extends Mage_Sa
                 $amount = $address->getCreditpointAmount();
 		$address->addTotal(array(
 				'code'  => Mage::helper('creditpoint')->getCode(),
-				'title' => Mage::helper('creditpoint')->__('Points Redeem ('.$this->PointsRedeem.'&nbsp;points)'),
+				'title' => Mage::helper('creditpoint')->__('Points Redeem ('.intval($this->PointsRedeem).'&nbsp;points)'),
 				'value' => '-'.$amount
 		));
                 

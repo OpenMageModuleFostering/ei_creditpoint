@@ -22,6 +22,15 @@
                 </creditpoint>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <ei_creditpoint>
+                    <files>
+                        <default>Ei_Creditpoint.csv</default>
+                    </files>
+                </ei_creditpoint>
+            </modules>
+        </translate>
     </frontend>
     <admin>
         <routers>
@@ -42,6 +51,15 @@
                 </creditpoint>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <ei_creditpoint>
+                    <files>
+                        <default>Ei_Creditpoint.csv</default>
+                    </files>
+                </ei_creditpoint>
+            </modules>
+        </translate>
     </adminhtml>
     <default>
         <creditpoint>

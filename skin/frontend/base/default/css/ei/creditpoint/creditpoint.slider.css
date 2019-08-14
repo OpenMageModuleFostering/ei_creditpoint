@@ -48,3 +48,8 @@
     position: relative;
     min-height: 10px;
 }
+
+.ei_creditpoint_loading{
+    background: url("../../../images/ei/creditpoint/loading.gif") no-repeat scroll 0 0 transparent;
+    padding-right:25px;
+}

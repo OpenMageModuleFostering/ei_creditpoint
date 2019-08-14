@@ -24,34 +24,16 @@ if ($moduleStatus == 1 && $customerLogin && $totalItemsInCart > 0):
     $pointsRatio = $formatRatio[0]/$formatRatio[1];
     $subtotalCredit = floor($pointsRatio * $subTotal);
     
-
-//    if (($pointsRedeem == '') && ($maxCreditConfig == 0 || $maxCreditConfig == NULL) && ($currentPointAmount >= $subTotal)) {
-//        echo $subtotalCredit;
-//        echo 'YYY11';
-//        $maxCredit = $subtotalCredit;
-//    } elseif (($pointsRedeem == '') && ($maxCreditConfig == 0 || $maxCreditConfig == NULL) && ($currentPointAmount <= $subTotal)) {
-//        echo 'YYY22';
-//        $maxCredit = $creditPoints;
-//    } elseif (($pointsRedeem == '') && ($maxCreditConfig >= $currentPointAmount)) {
-//        echo 'YYY33';
-//        $maxCredit = $creditPoints;
-//    } elseif (($pointsRedeem == '') && ($maxCreditConfig <= $currentPointAmount)) {
-//        echo 'YYY444';
-//        $maxCredit = $maxCreditConfig;
-//    } elseif ($pointsRedeem != '') {
-//        echo 'YYY555';
-//        $maxCredit = $pointsRedeem;
-//    } else {
-//        echo 'YYY';
-//        $maxCredit = $maxCreditConfig;
-//    }
     
+    $maxCredit = '';
     if (($maxCreditConfig == 0 || $maxCreditConfig == NULL) && ($currentPointAmount >= $subTotal)) {
         $maxCredit = $subtotalCredit;
     } elseif (($maxCreditConfig == 0 || $maxCreditConfig == NULL) && ($currentPointAmount <= $subTotal)) {
         $maxCredit = $creditPoints;
     } elseif (($maxCreditConfig >= $currentPointAmount)) {
         $maxCredit = $creditPoints;
+    }elseif (($maxCreditConfig > 0) &&($maxCreditConfig >= $subTotal) ) {
+        $maxCredit = $subtotalCredit;
     } elseif (($maxCreditConfig <= $currentPointAmount)) {
         $maxCredit = $maxCreditConfig;
     } else {
@@ -86,13 +68,13 @@ if ($moduleStatus == 1 && $customerLogin && $totalItemsInCart > 0):
     <?php elseif (empty($creditPoints)): ?>
                     <div style="padding-top: 5px;">
                         <label style="display: inline !important;">
-        <?php echo $this->__('You do not have sufficient credit points.'); ?>
+        <?php echo $this->__('You do not have sufficient credit points'); ?>
                         </label>
                     </div>
 
     <?php else: ?>
                     <div style="padding-top: 5px;">
-                        <label style="display: inline !important;"><?php echo $this->__('Slide to redeem your credit points.'); ?></label>
+                        <label style="display: inline !important;"><?php echo $this->__('Slide to redeem your credit points'); ?></label>
                     </div>
 
 
@@ -120,7 +102,7 @@ if ($moduleStatus == 1 && $customerLogin && $totalItemsInCart > 0):
             
         <div id="cart-totals-loading" style="display: none; ">
            <div style="text-align:center;margin-top:30px;">
-	    <img src="http://demo.mage-world.com/1611/skin/frontend/default/default/mw_rewardpoints/images/loading.gif" class="v-middle" alt="loading"> &nbsp; 
+	    <img class="ei_creditpoint_loading"> &nbsp; 
                 <?php echo $this->__('Updating cart information...');?>
            </div>
         </div>
@@ -128,8 +110,10 @@ if ($moduleStatus == 1 && $customerLogin && $totalItemsInCart > 0):
 
 <script type="text/javascript">
 
-        var creditPointVal = '<?php echo $maxCredit; ?>';
-        var pointsRedeem = '<?php echo $pointsRedeem; ?>';
+        var creditPointVal = parseInt('<?php echo $maxCredit; ?>');
+        var pointsRedeem = parseInt('<?php echo $pointsRedeem; ?>');
+        var subTotal = parseInt('<?php echo $subTotal; ?>');
+        var subTotalCredit = parseInt('<?php echo $subtotalCredit; ?>');
         var time = 1000;
         var time_new = 1500; //was 2000
         var timer;
@@ -159,14 +143,26 @@ if ($moduleStatus == 1 && $customerLogin && $totalItemsInCart > 0):
         });
         
         if(pointsRedeem != '' && pointsRedeem == creditPointVal){
+            
           $('credit_point').value = pointsRedeem ;
           $('use_max_credit_points').checked = true;
-        }else if(pointsRedeem != '' && pointsRedeem != creditPointVal){
+          ei_sider.setPointChange(creditPointVal);
+          
+        }else if(pointsRedeem != '' && pointsRedeem != creditPointVal && pointsRedeem < subTotal){
+            
           $('credit_point').value = pointsRedeem ;
+          $('use_max_credit_points').checked = true;
+          ei_sider.setPointChange(creditPointVal);
+          
+        }else if(pointsRedeem != '' && pointsRedeem > subTotal){
+            
+          $('credit_point').value = subTotalCredit ;
+          $('use_max_credit_points').checked = true;
+          ei_sider.setPointChange(creditPointVal);
         }
 
+
         $('use_max_credit_points').observe('click', function(e) {
-            
             if (this.checked)
                 ei_sider.setPointChange(creditPointVal);
             else

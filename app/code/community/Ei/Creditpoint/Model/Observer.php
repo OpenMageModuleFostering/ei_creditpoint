@@ -141,7 +141,7 @@ class Ei_Creditpoint_Model_Observer {
     public function updatePaypalTotal($evt) {
 
         $cart = $evt->getPaypalCart();
-        $cart->updateTotal(Mage_Paypal_Model_Cart::TOTAL_SUBTOTAL, $cart->getSalesEntity()->getCreditpointAmount());
+        $cart->updateTotal(Mage_Paypal_Model_Cart::TOTAL_DISCOUNT, $cart->getSalesEntity()->getCreditpointAmount());
     }
 
 }

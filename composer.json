@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/ei_creditpoint",
+    "name": "OpenMageModuleFostering\/ei_creditpoint",
     "type": "magento-module",
     "license": "OSL-v3.0",
     "homepage": "",
     "description": "Credit points for Customers",
     "authors": [
-    {
-        "name": "Vikram",
-        "email": "vikram.purohit@einfochips.com"
-    }
-],
+        {
+            "name": "Vikram",
+            "email": "vikram.purohit@einfochips.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
